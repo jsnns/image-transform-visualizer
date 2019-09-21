@@ -1,0 +1,17 @@
+.image {
+	display: inline-flex;
+	width: auto;
+}
+
+.inner-image {
+	flex-direction: column;
+}
+
+.image .row {
+	flex-direction: row;
+}
+
+.image .row .pixel {
+	margin: 0px;
+	display: inline-block;
+}

@@ -3,9 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "chroma": "^0.0.1",
+    "chroma-js": "^2.0.6",
+    "grommet": "^2.7.8",
+    "jest": "^24.9.0",
+    "polished": "^3.4.1",
+    "radium": "^0.26.0",
     "react": "^16.9.0",
+    "react-animations": "^1.0.0",
     "react-dom": "^16.9.0",
-    "react-scripts": "3.1.2"
+    "react-scripts": "3.1.2",
+    "styled-components": "^4.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
