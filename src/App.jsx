@@ -1,7 +1,7 @@
-import React, { Component, useState } from "react";
-import { Button, Select, Text, Box, RangeInput } from "grommet";
+import React, {Component} from "react";
+import {Box, Text, Anchor} from "grommet";
 
-import { Image } from "./components/Image";
+import {Image} from "./components/Image";
 import {meanBlur} from "./filters/meanBlur";
 
 import "./styles/Image.css";
@@ -9,70 +9,98 @@ import "./styles/App.css";
 import ImageTemplates from "./components/ImageTemplates";
 import {gaussianBlur} from "./filters/gaussianBlur";
 import {sharpen} from "./filters/sharpen";
+import {rotateImage, shuffleRows, swirl} from "./filters/swirl";
+import {applyKernal} from "./filters/applyKernal";
+import {templateHardEdge} from "./templates/templateHardEdge";
+import {templateCheckerboard} from "./templates/templateCheckerboard";
+import {templateRainbow} from "./templates/templateRainbow";
+import {templateRandom} from "./templates/templateRandom";
+import {templateApple} from "./templates/templateApple";
+import MD5ID from "./components/MD5ID";
+import Filters from "./components/Filters";
+import {invert} from "./filters/invert";
 
 const kernalChoices = [
-	{ name: "Mean Blur", kernal: meanBlur },
-	{ name: "Gaussian Blur", kernal: gaussianBlur},
-	{ name: "Sharpen", kernal: sharpen}
+    {name: "Mean Blur", kernal: meanBlur},
+    {name: "Gaussian Blur", kernal: gaussianBlur},
+    {name: "Sharpen", kernal: sharpen},
+    {name: "Randomize", kernal: swirl},
+    {name: "Flip", kernal: rotateImage},
+    {name: "Shuffle Rows", kernal: shuffleRows},
+    {name: "Invert", kernal: invert}
+];
+
+const imageTemplates = [
+    {name: "Hard Edge", f: templateHardEdge},
+    {name: "Checkerboard", f: templateCheckerboard},
+    {name: "Rainbow", f: templateRainbow},
+    {name: "Random", f: templateRandom},
+    {name: "Apple", f: templateApple},
 ];
 
 class App extends Component {
-	state = {
-		image: null,
-		filteredImage: null,
-		selectedKernal: kernalChoices[0]
-	};
+    state = {
+        image: null,
+        oldImage: null,
+        previousImage: null,
+        selectedKernal: kernalChoices[0],
+        customKernal: ""
+    };
 
-	render() {
-		return (
-			<Box width={"100vw"} pad="small" direction="column">
-				<ImageTemplates changeImage={this.updateImage} hasImage={Boolean(this.state.image)} />
+    render() {
+        let pixelSize = 0;
 
-				<Box direction="row">
-					<Image pixelSize={35} image={this.state.image} />
-					<Box direction="column" margin="small">
-						<Select
-							options={kernalChoices}
-							labelKey="name"
-							value={this.state.selectedKernal}
-							onChange={({ option }) =>
-								this.setState({ selectedKernal: option })
-							}
-						/>
-						<Button
-							brand
-							disabled={!this.state.selectedKernal || !this.state.image}
-							margin="small"
-							onClick={this.applyKernal}
-							label={"=>"}
-						/>
-						<Button
-							brand
-							disabled={!this.state.filteredImage}
-							margin="small"
-							onClick={this.swapImages}
-							label={"<="}
-						/>
-					</Box>
-					<Image pixelSize={35} image={this.state.filteredImage} />
-				</Box>
-			</Box>
-		);
-	}
+        const {state} = this;
 
-	updateImage = image => {
-		this.setState({ image, filteredImage: null })
-	};
+        if (state.image) {
+            pixelSize = Math.floor(85 / state.image.length);
+        }
 
-	swapImages = () => {
-		this.setState({ image: this.state.filteredImage, filteredImage: null });
-	};
+        return (
+            <Box width={"100vw"} height={"100vh"} direction="row" background={"dark-1"}>
+                <ImageTemplates
+                    changeImage={this.updateImage}
+                    hasImage={Boolean(state.image)}
+                    imageTemplates={imageTemplates}
+                />
 
-	applyKernal = () => {
-		this.setState({
-			filteredImage: this.state.selectedKernal.kernal(this.state.image)
-		});
-	};
+                <Box flex={"grow"} align={"center"} justify={"center"} height={"100%"}>
+                    <Image pixelSize={`${pixelSize}vh`} image={state.image}/>
+                    <MD5ID message={JSON.stringify(state.image)}/>
+                </Box>
+
+                <Filters
+                    hasImage={Boolean(state.image)}
+                    applyCustomKernal={this.applyCustomKernal}
+                    applyKernal={this.applyKernal}
+                    kernalChoices={kernalChoices}
+                />
+
+                <Text style={{position: "absolute", bottom: 10, right: 10}}>
+					<Anchor target={"new"} href={"https://workbyjacob.com"}>Jacob Sansbury</Anchor> 2019
+				</Text>
+            </Box>
+        );
+    }
+
+    applyCustomKernal = kernal => {
+        kernal = kernal.split("\n").map(row => row.split(",").map(unit => Number(unit.trim())));
+        let image = applyKernal(this.state.image, kernal);
+
+        return this.setState({image});
+    };
+
+    updateImage = image => {
+        this.setState({image, previousImage: null});
+    };
+
+    applyKernal = kernal => {
+        const previousImage = this.state.image;
+        this.setState({
+            image: kernal(this.state.image),
+            previousImage
+        });
+    };
 }
 
 export default App;

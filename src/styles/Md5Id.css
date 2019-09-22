@@ -1,0 +1,10 @@
+.md5-id {
+    letter-spacing: 0.5rem;
+    text-decoration: underline;
+}
+
+.md5-container {
+    font-size: 1.35rem;
+    font-weight: 700;
+    font-family: "Roboto Mono", "monospace"
+}
