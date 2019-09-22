@@ -3,6 +3,7 @@
 body {
 	box-sizing: border-box;
 	display: flex;
+	background-color: #333333;
 }
 
 .App {

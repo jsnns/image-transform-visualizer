@@ -1,4 +1,4 @@
-import { getKernalPixels } from "../meanBlur";
+import { getKernalPixels } from "../applyKernal";
 
 it("gets the correct pixels", () => {
     let image = [[1, 2, 3], [1, 2, 3], [1, 2, 3]];
@@ -15,4 +15,15 @@ it("gets the correct pixels", () => {
     pixels = getKernalPixels(image, 0, 0);
 
     expect(pixels).toEqual([[1, 1, 1], [1, 1, 1], [1, 1, 1]]);
+});
+
+it("handles a one-pixel image", () => {
+    let image = [[1]];
+    let pixels = getKernalPixels(image, 0, 0);
+
+    expect(pixels).toEqual([[1, 1, 1], [1, 1, 1], [1, 1, 1]]);
+});
+
+it("gets the pixel's value", () => {
+
 });

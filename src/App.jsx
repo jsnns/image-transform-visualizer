@@ -20,14 +20,14 @@ import MD5ID from "./components/MD5ID";
 import Filters from "./components/Filters";
 import {invert} from "./filters/invert";
 
-const kernalChoices = [
-    {name: "Mean Blur", kernal: meanBlur},
-    {name: "Gaussian Blur", kernal: gaussianBlur},
-    {name: "Sharpen", kernal: sharpen},
-    {name: "Randomize", kernal: swirl},
-    {name: "Flip", kernal: rotateImage},
-    {name: "Shuffle Rows", kernal: shuffleRows},
-    {name: "Invert", kernal: invert}
+const kernelChoices = [
+    {name: "Mean Blur", kernel: meanBlur},
+    {name: "Gaussian Blur", kernel: gaussianBlur},
+    {name: "Sharpen", kernel: sharpen},
+    {name: "Randomize", kernel: swirl},
+    {name: "Flip", kernel: rotateImage},
+    {name: "Shuffle Rows", kernel: shuffleRows},
+    {name: "Invert", kernel: invert}
 ];
 
 const imageTemplates = [
@@ -43,7 +43,7 @@ class App extends Component {
         image: null,
         oldImage: null,
         previousImage: null,
-        selectedKernal: kernalChoices[0],
+        selectedKernal: kernelChoices[0],
         customKernal: ""
     };
 
@@ -73,7 +73,7 @@ class App extends Component {
                     hasImage={Boolean(state.image)}
                     applyCustomKernal={this.applyCustomKernal}
                     applyKernal={this.applyKernal}
-                    kernalChoices={kernalChoices}
+                    kernelChoices={kernelChoices}
                 />
 
                 <Text style={{position: "absolute", bottom: 10, right: 10}}>
@@ -83,9 +83,9 @@ class App extends Component {
         );
     }
 
-    applyCustomKernal = kernal => {
-        kernal = kernal.split("\n").map(row => row.split(",").map(unit => Number(unit.trim())));
-        let image = applyKernal(this.state.image, kernal);
+    applyCustomKernal = kernel => {
+        kernel = kernel.split("\n").map(row => row.split(",").map(unit => Number(unit.trim())));
+        let image = applyKernal(this.state.image, kernel);
 
         return this.setState({image});
     };
@@ -94,10 +94,10 @@ class App extends Component {
         this.setState({image, previousImage: null});
     };
 
-    applyKernal = kernal => {
+    applyKernal = kernel => {
         const previousImage = this.state.image;
         this.setState({
-            image: kernal(this.state.image),
+            image: kernel(this.state.image),
             previousImage
         });
     };

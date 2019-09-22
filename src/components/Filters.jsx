@@ -1,19 +1,19 @@
-import {Box, Button, Heading, TextArea} from "grommet/es6";
+import {Box, Button, Heading, TextArea} from "grommet";
 import * as PropTypes from "prop-types";
 import React, {useState} from "react";
 
-function Filters({kernalChoices, hasImage, applyCustomKernal, applyKernal}) {
+function Filters({kernelChoices, hasImage, applyCustomKernal, applyKernal}) {
     const [customKernal, setCustomKernal] = useState("0,0,0\n0,0,0\n0,0,0");
 
     return <Box direction="column" margin={{right: "small"}} gap="small">
         <Heading margin={{bottom: "small", top: "small"}}>
             Filters
         </Heading>
-        {kernalChoices.map(choice => (
+        {kernelChoices.map(choice => (
             <Button
                 primary
                 disabled={!hasImage}
-                onClick={() => applyKernal(choice.kernal)}
+                onClick={() => applyKernal(choice.kernel)}
                 label={choice.name}
             />
         ))}
