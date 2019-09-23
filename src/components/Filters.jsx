@@ -5,18 +5,25 @@ import React, {useState} from "react";
 function Filters({kernelChoices, hasImage, applyCustomKernal, applyKernal}) {
     const [customKernal, setCustomKernal] = useState("0,0,0\n0,0,0\n0,0,0");
 
+    const isMobile = window.innerHeight > window.innerWidth;
+
     return <Box direction="column" margin={{right: "small"}} gap="small">
         <Heading margin={{bottom: "small", top: "small"}}>
             Filters
         </Heading>
-        {kernelChoices.map(choice => (
-            <Button
-                primary
-                disabled={!hasImage}
-                onClick={() => applyKernal(choice.kernel)}
-                label={choice.name}
-            />
-        ))}
+        <Box direction={"row"} wrap>
+            {kernelChoices.map(choice => (
+                <Box basis={isMobile ? "1/2" : "auto"}
+                     fill={!isMobile} margin={"none"} pad={isMobile ? "small" : {bottom: "small"}}>
+                    <Button
+                        primary
+                        disabled={!hasImage}
+                        onClick={() => applyKernal(choice.kernel)}
+                        label={choice.name}
+                    />
+                </Box>
+            ))}
+        </Box>
         <Box margin={{top: "medium"}} gap={"small"}>
             <TextArea
                 value={customKernal}

@@ -20,19 +20,21 @@ function MD5ID({ message, noSlice }) {
 			<Box direction="row" gap="small" margin={{ top: "small" }}>
 				<Text>Current Hash&nbsp;</Text>
 				<span className="md5-id">{hash.toUpperCase().slice(start)}</span>
-				<Button label="Memory" onClick={() => setSavedHash(hash)} />
 			</Box>
 			{savedHash && (
-				<div>
-					<Text>Memory Hash&nbsp;&nbsp;&nbsp;</Text>
+				<Box direction="row" gap="small" margin={{ top: "small" }}>
+					<Text>Memory Hash&nbsp;&nbsp;</Text>
 					<span
 						className="md5-id"
 						style={{ color: savedHash === hash ? "green" : "red" }}
 					>
 						{savedHash.toUpperCase().slice(start)}
 					</span>
-				</div>
+				</Box>
 			)}
+			<Box direction={"row"} fill pad={{top: "small", bottom: "small"}}>
+				<Button fill label="Memory" onClick={() => setSavedHash(hash)} />
+			</Box>
 		</div>
 	);
 }

@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Box, Text, Anchor} from "grommet";
+import {Anchor, Box, Text} from "grommet";
 
 import {Image} from "./components/Image";
 import {meanBlur} from "./filters/meanBlur";
@@ -53,32 +53,49 @@ class App extends Component {
         const {state} = this;
 
         if (state.image) {
-            pixelSize = Math.floor(85 / state.image.length);
+            if (window.innerHeight > window.innerWidth) {
+                pixelSize = Math.floor((window.innerWidth*.8) / state.image.length);
+                pixelSize = `${pixelSize}px`;
+            }
+            if (window.innerHeight <= window.innerWidth) {
+                pixelSize = Math.floor(50 / state.image.length);
+                pixelSize = `${pixelSize}vw`;
+            }
         }
 
-        return (
-            <Box width={"100vw"} height={"100vh"} direction="row" background={"dark-1"}>
-                <ImageTemplates
-                    changeImage={this.updateImage}
-                    hasImage={Boolean(state.image)}
-                    imageTemplates={imageTemplates}
-                />
+        const isMobile = window.innerHeight > window.innerWidth;
 
-                <Box flex={"grow"} align={"center"} justify={"center"} height={"100%"}>
-                    <Image pixelSize={`${pixelSize}vh`} image={state.image}/>
-                    <MD5ID message={JSON.stringify(state.image)}/>
+        return (
+            <Box width={"100vw"} minHeight={"100vh"} direction="row-responsive" background={"dark-1"}>
+                <Box>
+                    <ImageTemplates
+                        changeImage={this.updateImage}
+                        hasImage={Boolean(state.image)}
+                        imageTemplates={imageTemplates}
+                    />
                 </Box>
 
-                <Filters
-                    hasImage={Boolean(state.image)}
-                    applyCustomKernal={this.applyCustomKernal}
-                    applyKernal={this.applyKernal}
-                    kernelChoices={kernelChoices}
-                />
+                <Box flex={"grow"} align={"center"} justify={"center"} pad={"large"}>
+                    <Image pixelSize={pixelSize} image={state.image} previousImage={state.previousImage}/>
+                    {!isMobile && (
+                        <MD5ID message={JSON.stringify(state.image)}/>
+                    )}
+                </Box>
 
-                <Text style={{position: "absolute", bottom: 10, right: 10}}>
-					<Anchor target={"new"} href={"https://workbyjacob.com"}>Jacob Sansbury</Anchor> 2019
-				</Text>
+                <Box margin={"none"} pad={"small"}>
+                    <Filters
+                        hasImage={Boolean(state.image)}
+                        applyCustomKernal={this.applyCustomKernal}
+                        applyKernal={this.applyKernal}
+                        kernelChoices={kernelChoices}
+                    />
+                </Box>
+
+                {!isMobile && (
+                    <Text style={{position: "fixed", bottom: 10, right: 10}}>
+                        <Anchor target={"new"} href={"https://workbyjacob.com"}>Jacob Sansbury</Anchor> 2019
+                    </Text>
+                )}
             </Box>
         );
     }
@@ -91,11 +108,14 @@ class App extends Component {
     };
 
     updateImage = image => {
-        this.setState({image, previousImage: null});
+        const previousImage = this.state.image;
+
+        this.setState({image, previousImage});
     };
 
     applyKernal = kernel => {
         const previousImage = this.state.image;
+
         this.setState({
             image: kernel(this.state.image),
             previousImage

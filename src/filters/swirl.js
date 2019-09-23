@@ -25,7 +25,7 @@ function shuffle(array) {
 }
 
 export function shuffleRows(image) {
-    return image.map(row => shuffle(row));
+    return imageCopy(image.map(row => shuffle(row)));
 }
 
 export function swirl(image) {
