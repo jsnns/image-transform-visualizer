@@ -1,9 +1,5 @@
 import imageCopy from "../helpers/imageCopy";
 
-export function reverseImage(image) {
-    return image.reverse().map(row => row.reverse());
-}
-
 export function rotateImage(image) {
     const newImage = [];
 
@@ -28,7 +24,7 @@ export function shuffleRows(image) {
     return imageCopy(image.map(row => shuffle(row)));
 }
 
-export function swirl(image) {
+export function randomize(image) {
     const newImage = imageCopy(image);
     return shuffleRows(rotateImage(shuffle(shuffleRows(newImage))));
 }

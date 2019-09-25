@@ -9,7 +9,7 @@ import "./styles/App.css";
 import ImageTemplates from "./components/ImageTemplates";
 import {gaussianBlur} from "./filters/gaussianBlur";
 import {sharpen} from "./filters/sharpen";
-import {rotateImage, shuffleRows, swirl} from "./filters/swirl";
+import {rotateImage, shuffleRows, randomize} from "./filters/randomize";
 import {applyKernal} from "./filters/applyKernal";
 import {templateHardEdge} from "./templates/templateHardEdge";
 import {templateCheckerboard} from "./templates/templateCheckerboard";
@@ -24,7 +24,7 @@ const kernelChoices = [
     {name: "Mean Blur", kernel: meanBlur},
     {name: "Gaussian Blur", kernel: gaussianBlur},
     {name: "Sharpen", kernel: sharpen},
-    {name: "Randomize", kernel: swirl},
+    {name: "Randomize", kernel: randomize},
     {name: "Flip", kernel: rotateImage},
     {name: "Shuffle Rows", kernel: shuffleRows},
     {name: "Invert", kernel: invert}

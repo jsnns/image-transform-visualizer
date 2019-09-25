@@ -1,10 +1,10 @@
 import chroma from "chroma-js";
 import imageCopy from "../helpers/imageCopy";
 import {padImage} from "../helpers/padImage";
-import {sum} from "../helpers/add";
+import {sum} from "../helpers/sum";
 import {individualColors} from "../helpers/splitColor";
 
-function getPixelValue(pixels, kernel, xy) {
+export function getPixelValue(pixels, kernel, xy) {
 	const {red, green, blue} = individualColors(pixels);
 
 	let _red = [], _green = [], _blue = [];
