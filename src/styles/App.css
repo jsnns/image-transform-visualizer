@@ -1,21 +1,21 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto+Mono:400,700&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono:400,700&display=swap");
 
 body {
-	box-sizing: border-box;
-	display: flex;
-	background-color: #333333;
+  box-sizing: border-box;
+  display: flex;
+  background-color: #1c1c1d;
 }
 
 .App {
-	width: 100vw;
+  width: 100vw;
 }
 
 .button {
-	display: inline-block;
-	margin: 10px;
-	padding: 5px 15px;
-	background-color: #000;
-	color: #fff;
-	border-radius: 3px;
-	cursor: pointer;
+  display: inline-block;
+  margin: 10px;
+  padding: 5px 15px;
+  background-color: #000;
+  color: #fff;
+  border-radius: 3px;
+  cursor: pointer;
 }
