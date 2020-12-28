@@ -1,24 +1,24 @@
+import { Anchor, Box, Grommet, grommet, Text } from "grommet";
 import React, { Component } from "react";
-import { Anchor, Box, Text, Grommet, grommet } from "grommet";
-
+import Filters from "./components/Filters";
 import { Image } from "./components/Image";
-import { meanBlur } from "./filters/meanBlur";
-
-import "./styles/Image.css";
-import "./styles/App.css";
 import ImageTemplates from "./components/ImageTemplates";
-import { gaussianBlur } from "./filters/gaussianBlur";
-import { sharpen } from "./filters/sharpen";
-import { rotateImage, shuffleRows, randomize } from "./filters/randomize";
+import MD5ID from "./components/MD5ID";
 import { applyKernal } from "./filters/applyKernal";
-import { templateHardEdge } from "./templates/templateHardEdge";
+import { gaussianBlur } from "./filters/gaussianBlur";
+import { invert } from "./filters/invert";
+import { meanBlur } from "./filters/meanBlur";
+import { randomize, rotateImage, shuffleRows } from "./filters/randomize";
+import { sharpen } from "./filters/sharpen";
+import "./styles/App.css";
+import "./styles/Image.css";
+import { templateApple } from "./templates/templateApple";
 import { templateCheckerboard } from "./templates/templateCheckerboard";
+import { templateHardEdge } from "./templates/templateHardEdge";
 import { templateRainbow } from "./templates/templateRainbow";
 import { templateRandom } from "./templates/templateRandom";
-import { templateApple } from "./templates/templateApple";
-import MD5ID from "./components/MD5ID";
-import Filters from "./components/Filters";
-import { invert } from "./filters/invert";
+
+
 
 const kernelChoices = [
   { name: "Mean Blur", kernel: meanBlur },

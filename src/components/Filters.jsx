@@ -1,6 +1,6 @@
-import {Box, Button, Heading, TextArea} from "grommet";
+import { Box, Button, Heading, TextArea } from "grommet";
 import * as PropTypes from "prop-types";
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 function Filters({kernelChoices, hasImage, applyCustomKernal, applyKernal}) {
     const [customKernal, setCustomKernal] = useState("0,0,0\n0,0,0\n0,0,0");
@@ -14,7 +14,7 @@ function Filters({kernelChoices, hasImage, applyCustomKernal, applyKernal}) {
         <Box direction={"row"} wrap>
             {kernelChoices.map(choice => (
                 <Box basis={isMobile ? "1/2" : "auto"}
-                     fill={!isMobile} margin={"none"} pad={isMobile ? "small" : {bottom: "small"}}>
+                     fill={!isMobile ? "horizontal" : undefined} margin={"none"} pad={isMobile ? "small" : {bottom: "small"}}>
                     <Button
                         primary
                         disabled={!hasImage}

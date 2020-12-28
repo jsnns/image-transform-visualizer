@@ -1,11 +1,11 @@
-import React from "react";
 import Radium from "radium";
+import React from "react";
 
 const styles = {
     fadeIn: (delay, previousColor, color) => ({
-        animation: 'x 1.25s',
+        animation: 'x 0.5s',
         animationDelay: `${delay}s`,
-        animationFillMode: "forwards",
+        animationFillMode: "both",
         animationName: Radium.keyframes({
             "0%": {backgroundColor: previousColor},
             "100%": {backgroundColor: color}
@@ -21,8 +21,8 @@ export let Image = ({image, pixelSize, previousImage}) => {
             <div className="inner-image">
                 {/* create image of rows */}
                 {image.map((row, x) => (
+                    
                     // create rows of pixels
-
                     <div className="row" style={{height: pixelSize}} key={`row-${x}`}>
                         {row.flatMap((pixel, y) => {
 
@@ -38,7 +38,7 @@ export let Image = ({image, pixelSize, previousImage}) => {
                                 className="pixel"
                                 key={`pixel-${x}-${y}`}
                                 style={{
-                                    ...styles.fadeIn(((x*image.length)+y)*(1.25/image.length**2), previousColor, pixel),
+                                    ...styles.fadeIn(((x*image.length)+y)*(1/image.length**2), previousColor, pixel),
                                     backgroundColor: previousColor,
                                     height: pixelSize,
                                     width: pixelSize

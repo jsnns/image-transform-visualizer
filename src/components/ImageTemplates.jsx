@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import { Box, Button, Heading, RangeInput, Text, TextInput } from "grommet";
+import React, { useState } from "react";
 import { templateHardEdge } from "../templates/templateHardEdge";
 import { Image } from "./Image";
 
@@ -46,7 +46,7 @@ const ImageTemplates = ({ changeImage, hasImage, imageTemplates }) => {
           return (
             <Box
               basis={isMobile ? "1/2" : "auto"}
-              fill={!isMobile}
+              fill={!isMobile ? "horizontal" : undefined}
               margin={"none"}
               pad={isMobile ? "small" : { bottom: "small" }}
             >
